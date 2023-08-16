@@ -1,0 +1,15 @@
+<!-- Edit page for edit route for edit exesting job it will give prefill form -->
+
+<%- include('../partials/header') %>
+<h1>edit page for <%= foundJob.postName %></h1>
+<form action="/jobs/<%= foundJob._id %>?_method=patch" method="post">
+    <input required type="text" name="postName" value="<%= foundJob.postName %>" id="">
+    <input required type="text" name="companyName" value="<%= foundJob.companyName %>" id="">
+    <input required type="number" name="CTC" value="<%= foundJob.CTC %>" id="">
+    <input type="number" name="CGPA" value="<%= foundJob.CGPA%>" id="" min="0" max="10" step="0.01">
+    <input type="text" name="location" value="<%= foundJob.location %>" id="">
+    <textarea required name="description" id="" cols="30" rows="10"><%= foundJob.description %></textarea>
+    <input type="number" name="numberOfPositions" value="<%= foundJob.numberOfPositions%>" id="">
+    <input type="submit" value="updet edited job">
+</form>
+<%- include('../partials/footer') %>

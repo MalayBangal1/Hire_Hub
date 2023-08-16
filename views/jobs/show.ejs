@@ -1,0 +1,25 @@
+<!-- Show page for show route -->
+
+<%- include('../partials/header') %>
+<h1>Show page for <%= foundJob.companyName %>'s <%= foundJob.postName %> job </h1>
+<div><%= foundJob.postName %></div>
+<div><%= foundJob.companyName %></div>
+<div><%= foundJob.CTC %></div>
+<div><%= foundJob.CGPA %></div>
+<div><%= foundJob.location %></div>
+<div><%= foundJob.numberOfPositions %></div>
+<div><%= foundJob.status %></div>
+<div><%= foundJob.description %></div>
+<% if(currentUser){%>
+    <a href="/jobs/<%= foundJob._id %>/apply/<%= currentUser._id %>" class="btn btn-info">Apply</a>
+<%} %>
+<% if(currentUser?.isAdmin){%>
+    <a class="btn btn-warning" href="/jobs/<%= foundJob._id %>/edit">Edit</a>
+    <form action="/jobs/<%= foundJob._id %>?_method=delete" method="post">
+        <input class="btn btn-danger" type="submit" value="delete">
+    </form>
+    <a class="btn btn-success" href="/jobs/<%= foundJob._id %>/questions">Questions</a>
+    <a class="btn btn-info" href="/jobs/<%= foundJob._id %>/test">Test</a>
+<% } %>
+
+<%- include('../partials/footer') %>

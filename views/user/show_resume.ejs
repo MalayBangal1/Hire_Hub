@@ -1,0 +1,35 @@
+<%- include('../partials/header') %>
+<h1>Resume show page</h1>
+<ul>
+    <li><%= resume.name %></li>
+    <li><%= resume.phone %></li>
+    <li><%= resume.linkedIn %></li>
+    <li>
+        <ul>
+            <li><%= resume?.experience[0]?.companyName %></li>
+            <li><%= resume?.experience[0]?.startDate %></li>
+            <li><%= resume?.experience[0]?.endDate %></li>
+            <li><%= resume?.experience[0]?.designation %></li>
+            <li><%= resume?.experience[0]?.description %></li>
+        </ul>
+    </li>
+    <li>
+        <ul>
+            <li><%= resume?.projects[0]?.titel %></li>
+            <li><%= resume?.projects[0]?.description %></li>
+            <li><%= resume?.projects[0]?.link %></li>
+        </ul>
+    </li>
+    <li>
+        <ul>
+            <li><%= resume?.education[0]?.titel %></li>
+            <li><%= resume?.education[0]?.unvercity%></li>
+            <li><%= resume?.education[0]?.startDate %></li>
+            <li><%= resume?.education[0]?.endDate %></li>
+            <li><%= resume?.education[0]?.result %></li>
+        </ul>
+    </li>
+    <li><%= resume.achievements %></li>
+    <a class="btn btn-warning" href="/users/<%= currentUser._id %>/resume/edit">edit resume</a>
+</ul>
+<%- include('../partials/footer') %>

@@ -1,0 +1,16 @@
+<%- include('../partials/header') %>
+<h1>New page of jobs</h1>
+
+<form action="/jobs/<%= id %>/questions" method="post">
+
+<input type="text" name="title" placeholder="Titel">
+<input type="text" name="option1" placeholder="Option 1">
+<input type="text" name="option2" placeholder="Option 2">
+<input type="text" name="option3" placeholder="Option 3">
+<input type="text" name="option4" placeholder="Option 4">
+<input type="text" name="correctAns" placeholder="Correct Ans">
+<input type="submit" value="Add">
+
+</form>
+
+<%- include('../partials/footer') %>

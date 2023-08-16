@@ -1,0 +1,15 @@
+<!-- New page for new route giving form for insert job -->
+
+<%- include('../partials/header') %>
+<h1>new page for jobs</h1>
+<form action="/jobs" method="post">
+    <input required type="text" name="postName" placeholder="postName" id="">
+    <input required type="text" name="companyName" placeholder="companyName" id="">
+    <input required type="number" name="CTC" placeholder="CTC" id="">
+    <input type="number" name="CGPA" placeholder="CGPA" id="" min="0" max="10" step="0.01">
+    <input type="text" name="location" placeholder="location" id="">
+    <textarea required name="description" id="" cols="30" rows="10">description</textarea>
+    <input type="number" name="numberOfPositions" placeholder="numberOfPositions" id="">
+    <input type="submit" value="Add new job">
+</form>
+<%- include('../partials/footer') %>

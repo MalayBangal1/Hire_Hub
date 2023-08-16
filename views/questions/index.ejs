@@ -1,0 +1,18 @@
+<%- include('../partials/header') %>
+<h1>Index page of Questions</h1>
+
+<% for(question of job.questions){%>
+    <div><%= question.titel %></div>
+    <div><%= question.option1 %></div>
+    <div><%= question.option2 %></div>
+    <div><%= question.option3 %></div>
+    <div><%= question.option4 %></div>
+    <div><%= question.correctAns %></div>
+    <a href="/jobs/<%= job._id %>/questions/<%= question._id %>">Edit</a>
+    <form action="/jobs/<%= job._id %>/questions/<%= question._id %>?_method=delete" method="post">
+    <input type="submit" value="Delete">
+    </form>
+<%} %>
+<a class="btn btn-outline-success me-3" href="/jobs/<%= job._id %>/questions/new">Add New Questions<strong>+</strong></a>
+
+<%- include('../partials/footer') %>

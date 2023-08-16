@@ -1,0 +1,25 @@
+<%- include('../partials/header') %>
+
+<div class="card border-dark mb-3" style="max-width: 100%;">
+    <div class="card-header">show page for user <%= foundUser.username %></div>
+    <div class="card-body text-dark text-center">
+      <h5 class="card-title">Info card Title</h5>
+      <ul class="card-text" style="list-style-type: none;">
+        <li><%= foundUser.username %></li>
+        <li><%= foundUser.CGPA %></li>
+        <li><%= foundUser.phone %></li>
+        <li><%= foundUser.dob %></li>
+        <li><%= foundUser.gender %></li>
+        <% if(currentUser.resume == undefined){%>
+          <li><a class="btn btn-info" href="/users/<%= foundUser._id %>/resume">creat Resume</a></li>
+       <% } else {%>
+        <li><a class="btn btn-info" href="/users/<%= foundUser._id %>/show_resume">Resume</a></li>
+      <%}%>
+    </ul>
+    <a href="/users/<%= foundUser._id %>/edit" class="btn btn-warning">Edit Profile</a>
+    </div>
+</div>
+
+
+
+<%- include('../partials/footer') %>

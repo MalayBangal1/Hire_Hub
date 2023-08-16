@@ -1,0 +1,8 @@
+<%- include('../partials/header') %>
+<form action="/notifications" method="post">
+<input type="text" name="title" placeholder="Title" id="" required>
+<input type="text" name="body" placeholder="Content" id="" required>
+<input type="text" name="author" placeholder="Author" id="" required>
+<input type="submit" class="btn btn-warning" value="Add a new notification">
+</form>
+<%- include('../partials/footer') %>

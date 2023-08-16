@@ -1,0 +1,28 @@
+<!-- Index page for index route to show all jobs -->
+
+<%- include('../partials/header') %>
+
+
+<h1>Index page of jobs</h1>
+
+<form action="/jobs/search" method="get">
+    <input type="text" name="name" id="">
+    <input class="btn btn-outline-warning me-3" type="submit" value="search">
+</form>
+
+<% for (let job of allJobs.docs) {%>
+    <div><%= job.postName %> -  <a class="btn btn-outline-info me-3" href="/jobs/<%= job._id %>">view more</a></div>
+<% } %>
+<nav aria-label="Page navigation example">
+    <ul class="pagination">
+        <li class="page-item"><a class="page-link" href="/jobs?page=<%= allJobs.prevPage %>">Previous</a></li>
+        <li class="page-item"><a class="page-link" href="/jobs?page=<%= allJobs.page %>"><%= allJobs.page %></a></li>
+        <li class="page-item"><a class="page-link" href="/jobs?page=<%= allJobs.page + 1 %>"><%= allJobs.page + 1 %></a>
+        </li>
+        <li class="page-item"><a class="page-link" href="/jobs?page=<%= allJobs.page + 2 %>"><%= allJobs.page + 2 %></a>
+        </li>
+        <li class="page-item"><a class="page-link" href="/jobs?page=<%= allJobs.nextPage %>">Next</a></li>
+    </ul>
+</nav>
+
+<%- include('../partials/footer') %>

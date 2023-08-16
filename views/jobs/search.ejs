@@ -1,0 +1,14 @@
+<%- include('../partials/header') %>
+
+
+<h1>Search page of jobs</h1>
+
+<!-- <form action="/jobs/search" method="get">
+    <input type="text" name="name" id="">
+    <input class="btn btn-outline-warning me-3" type="submit" value="search">
+</form> -->
+
+<% for (let job of jobs) {%>
+    <div><%= job.companyName %> -  <a class="btn btn-outline-info me-3" href="/jobs/<%= job._id %>">view more</a></div>
+<% } %>
+<%- include('../partials/footer') %>
