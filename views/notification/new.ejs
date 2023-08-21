@@ -1,8 +1,42 @@
-<%- include('../partials/header') %>
-<form action="/notifications" method="post">
-<input type="text" name="title" placeholder="Title" id="" required>
-<input type="text" name="body" placeholder="Content" id="" required>
-<input type="text" name="author" placeholder="Author" id="" required>
-<input type="submit" class="btn btn-warning" value="Add a new notification">
-</form>
+
+<%- include('../partials/notificationHeader'); -%>
+<div class="container">
+    <div class="row mt-2">
+        <div class="col-lg-6">
+            <img src="/images/add_notif.svg"
+                id="login-img" alt="">
+        </div>
+        <div class="col-lg-6">
+            <main class="form-signin mt-5">
+
+                <form action="/notifications" method="post">
+                    <h1 class="h3 fs-3 mb-3 lead text-center">Post a new notification</h1>
+
+                    <div class="form-floating">
+                        <input type="text" class="form-control mid-input" id="jobTitle" name="title" placeholder="description" required>
+                        <label for="jobTitle">Notification Title</label>
+                    </div>
+
+                    <div class="form-floating">
+                        <input type="text" class="form-control mid-input" id="jobTitle" name="body" placeholder="description" required>
+                        <label for="jobTitle">Notification Body</label>
+                    </div>
+
+                    <div class="form-floating">
+                        <input type="text" class="form-control mid-input" id="notifAuthor" name="author" placeholder="author" required>
+                        <label for="notifAuthor">Author</label>
+                    </div>
+
+                    <button class="w-100 btn btn-lg btn-primary" type="submit">Post Notification</button>
+                </form>
+            </main>
+            <div class="form-signin">
+                <a href="/notifications">Go back</a>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
 <%- include('../partials/footer') %>

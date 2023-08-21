@@ -1,25 +1,131 @@
 <!-- Show page for show route -->
 
-<%- include('../partials/header') %>
-<h1>Show page for <%= foundJob.companyName %>'s <%= foundJob.postName %> job </h1>
-<div><%= foundJob.postName %></div>
-<div><%= foundJob.companyName %></div>
-<div><%= foundJob.CTC %></div>
-<div><%= foundJob.CGPA %></div>
-<div><%= foundJob.location %></div>
-<div><%= foundJob.numberOfPositions %></div>
-<div><%= foundJob.status %></div>
-<div><%= foundJob.description %></div>
-<% if(currentUser){%>
-    <a href="/jobs/<%= foundJob._id %>/apply/<%= currentUser._id %>" class="btn btn-info">Apply</a>
-<%} %>
-<% if(currentUser?.isAdmin){%>
-    <a class="btn btn-warning" href="/jobs/<%= foundJob._id %>/edit">Edit</a>
-    <form action="/jobs/<%= foundJob._id %>?_method=delete" method="post">
-        <input class="btn btn-danger" type="submit" value="delete">
-    </form>
-    <a class="btn btn-success" href="/jobs/<%= foundJob._id %>/questions">Questions</a>
-    <a class="btn btn-info" href="/jobs/<%= foundJob._id %>/test">Test</a>
-<% } %>
 
+
+<%- include('../partials/jobHeader'); -%>
+<div class="show-page">
+	<div style="padding-top: 100px; padding-bottom: 150px; background-image: url(/images/job_show.svg); background-repeat: no-repeat; background-position: 50% 25%;" class="online-cv section-overly pt-90 pb-120">
+	    <div class="container">
+	        <div class="row justify-content-center">
+	            <div class="col-xl-10">
+	                <div class="cv-caption text-center">
+	                    <p class="pera2 mt-5">
+	                        <%= job.companyName %>
+	                    </p>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+	</div>
+	
+	<div class="container mt-5">
+	    <div class="card mb-3">
+	        <div class="row g-0">
+	            <% if(job.logo.length > 25) {%>
+	                <div class="col-lg-1 d-flex align-items-center">
+						<img style="width: 100%; height: auto;" src="<%= job.logo %>" class="img-fluid rounded-start my-auto p-3" alt="Company Logo">
+					</div>
+	            <%}else {%>
+					<div class="col-lg-1 d-flex align-items-center justify-content-center">
+						<i class="fa-solid fa-briefcase fa-2xl" style="color: #166974;"></i>
+					</div>
+				<%}%>
+	            <div class="col-lg-8">
+	                <div class="card-body">
+	                    <h4 class="card-title">
+	                        <%= job.companyName %>
+	                    </h4>
+	                    <p class="card-text"><small class="text-muted">
+	                            <i class="me-1 fas fa-map-marker-alt"></i> <%= job.location %>
+	                            <i class="ms-3 me-1 far fa-clock"></i> <%= job.time %>
+	                            <i class="ms-3 me-1 far fa-money-bill-alt"></i> <%= job.CTC %> LPA
+	                            <i class="ms-3 me-1 fas fa-hourglass-half"></i> <%= job.deadline?.toDateString() %>
+	                            <strong><i class="ms-3 me-1 fas fa-calendar-day"></i> Status: <%= job.status %></strong>
+	                    </small></p>
+						 <p>
+                            
+									<a href="/jobs/<%=job._id%>/apply/<%=currentUser?._id%>" class="btn btn-success">
+							   	 <i class="me-2 fas fa-briefcase"></i> Apply</a>
+
+						
+							<% for(let ids of job.appliedUsers){ %>
+									<%	if(ids.equals(currentUser?._id)){ %>
+										<a href="/jobs/<%= job._id %>/test" class="btn btn-info ms-2"><i class="me-2 far fa-file-alt"></i> Give Test</a>
+									<%}%>
+							<%}%>
+						
+						
+						<% if(currentUser && currentUser.isAdmin){ %>
+							<a href="/jobs/<%= job._id %>/test" class="ms-2 btn btn-warning"><i class="me-2 far fa-file-alt"></i> Give Test (ADMIN)</a>
+						<% } %>
+						<a href="/jobs" class="ms-2 me-2 btn btn-outline-primary"><i class="me-2 fas fa-arrow-left"></i> Go Back</a>
+						</p>
+	                   
+	                </div>
+	            </div>
+	            <div class="col-lg-3 d-flex align-items-center justify-content-center">
+	                <% if(currentUser && currentUser.isAdmin){ %>
+						<a href="/jobs/<%=job._id%>/edit" class="btn btn-outline-warning me-2">Edit</a>
+						<form action="/jobs/<%=job._id%>?_method=DELETE" method="post">
+							<button class="btn btn-outline-danger me-2">Delete</button>
+						</form>
+						<a class="me-2 btn btn-outline-dark" href="/jobs/<%=job._id%>/questions/new">Add Test (ADMIN)</a>
+					<% } %>
+	            </div>
+	        </div>
+	    </div>
+	    <div class="row">
+	    	<div class="col-lg-8">
+	    		<div class="card mb-5">
+	    			<div class="card-body">
+	    				<h5 class="card-title">
+	    					Description
+	    				</h5>
+	    				<div class="card-text">
+	    					<%=job.description%>
+	    				</div>
+	    				<h5 class="mt-3 card-title">
+	    					Key Responsibilities
+	    				</h5>
+	    				<div class="card-text">
+	    					<%=job.responsibilities%>
+	    				</div>
+	    				<h5 class="mt-3 card-title">
+	    					Minimum Requirements
+	    				</h5>
+	    				<div class="card-text">
+	    					<%=job.requirements%>
+	    				</div>
+	    			</div>
+	    		</div>
+	    	</div>
+	    	<div class="col-lg-4">
+	    		<div class="card">
+	    			<div class="card-body">
+	    				<h5 class="card-title">
+	    					Short Info
+	    				</h5>
+	    				<div class="card-text">
+	    					<p><i class="mt-2 me-2 fas fa-bolt"></i> Posted: <%= moment(job.createdAt).fromNow() %></p>
+	    					<p><i class="me-2 fas fa-chart-area"></i> Industry: IT</p>
+	    					<p><i class="me-2 fas fa-chart-line"></i> Experience: <%= job.experience %></p>
+	    					<p><i class="me-2 fas fa-key"></i> Job Function: <%= job.postName %></p>
+	    					<!-- <a href="#" class="btn btn-outline-success">Status: Active</a> -->
+	    					<!-- <a href="#" class="btn btn-outline-warning">Status: Interview Phase</a> -->
+	    					<% if(currentUser && currentUser.isAdmin){ %>
+		    					<p><a href="/jobs/<%=job._id%>/status?status=active" class=" btn btn-outline-success">Status: Active</a></p>
+		    					<p><a href="/jobs/<%=job._id%>/status?status=interview" class=" btn btn-outline-warning">Status: Interview Phase</a></p>
+		    					<p><a href="/jobs/<%=job._id%>/status?status=over" class=" btn btn-outline-danger">Status: Over</a></p>
+	    					<% } %>
+	    				</div>
+	    			</div>
+	    		</div>
+	    		
+	    	</div>
+	    </div>
+	</div>
+</div>
+
+
+<%- include('../partials/userFooter'); -%>
 <%- include('../partials/footer') %>

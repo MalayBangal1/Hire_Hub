@@ -1,5 +1,7 @@
 const express = require('express');
 const passport = require('passport'); // clg(req.user) inside jobs get request that why require it nothing else;
+const axios = require('axios'); //For ScrapeIN API request
+
 const router = express.Router();
 
 
@@ -16,6 +18,23 @@ const{checkLoggedIn,checkAdmin} = require('../middlewares/index');
 function escapeRegex(text) {
 	return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&');
 }
+
+router.get('/home',async (req,res) =>{
+    try{
+        let pageNo = 1;
+        if(req.query.page) pageNo = req.query.page;
+        const options = {
+            page: pageNo,
+            limit: 4,
+          };
+        const recentJobs = await Job.paginate({} ,options);
+        return res.render('jobs/home',{recentJobs});
+    } catch (error) {
+        req.flash('error', 'Something went wrong while fetching recent jobs, please try again later');
+		console.log(error);
+		return res.redirect('/');
+    }
+});
 
 //! Fuzzy Searching
 
@@ -37,13 +56,11 @@ router.get('/jobs/search',async (req,res) =>{
 
 router.get("/jobs",async (req,res) =>{
     try {
-        
-        console.log(req.user?.username);
         let pageNo = 1;
         if(req.query.page) pageNo = req.query.page;
         const options = {
             page: pageNo,
-            limit: 10,
+            limit: 8,
           };
         const allJobs = await Job.paginate({},options);
         return res.render('jobs/index',{allJobs});
@@ -61,20 +78,28 @@ router.get("/jobs/new",checkLoggedIn,checkAdmin,(req,res) =>{
 //* 3 CREATE ROUTE
 router.post("/jobs",checkLoggedIn,checkAdmin,async (req,res) =>{
     try {
-        const newJob = new Job({
-            postName : req.body.postName,
-            companyName : req.body.companyName,
-            CTC : req.body.CTC,
-            CGPA : req.body.CGPA,
-            location : req.body.location,
-            description : req.body.description,
-            numberOfPositions: req.body.numberOfPositions,
-        });
+        const newJob = new Job(req.body.job);
+        const options =  {
+            method: 'GET',
+            url: `https://app.scrapein.app/api/v1/google/images?q=${newJob.logo}&google_domain=google.com&gl=us&hl=en&api_key=${process.env.API_KEY}`,
+            headers: {accept: 'application/json'}
+          };
+          
+          await axios                     // needed await for updet nnewJob.logo 
+            .request(options)
+            .then(function (response) {
+              newJob.logo = response.data.image_results[0].image; // updet newJob.logo
+            })
+            .catch(function (error) {
+              console.error(error);
+              req.flash('error', 'Something went wrong while creating a jobs logo, please try again later');
+            });
         await newJob.save();
         const newNotif = new Notification({
             title:`new ${newJob.postName} oppening`,
             body:`${newJob.companyName} just posted a new job`,
             author:newJob.companyName,
+            jobId:newJob._id
         });
         await newNotif.save();
         req.flash('success', 'Successfully posted a job');
@@ -88,8 +113,9 @@ router.post("/jobs",checkLoggedIn,checkAdmin,async (req,res) =>{
 //* 4 SHOW ROUTE
 router.get("/jobs/:id",async (req,res) =>{
     try {
-        const foundJob = await Job.findById(req.params.id);
-        return res.render('jobs/show',{foundJob});
+        const job = await Job.findById(req.params.id).populate('appliedUsers');
+        // res.send(job);
+        return res.render('jobs/show',{job});
     } catch (error) {
         req.flash('error', 'Something went wrong while fetching a job, please try again later');
 		console.log(error);
@@ -110,24 +136,17 @@ router.get("/jobs/:id/edit",checkLoggedIn,checkAdmin,async (req,res) =>{
 //* 6 UPDATE ROUTE
 router.patch("/jobs/:id",checkLoggedIn,checkAdmin,async (req,res)=>{
     try {
-        const jobData = {
-            postName : req.body.postName,
-            companyName : req.body.companyName,
-            CTC : req.body.CTC,
-            CGPA : req.body.CGPA,
-            location : req.body.location,
-            description : req.body.description,
-            numberOfPositions: req.body.numberOfPositions,
-        };
+        const jobData = req.body.job;
         await Job.findByIdAndUpdate(req.params.id,jobData);
         const newNotif = new Notification({
             title:`${jobData.companyName} just updet there job`,
             body:`${jobData.postName} post`,
             author:jobData.companyName,
+            jobId:req.params.id
         });
         await newNotif.save();
         req.flash('success', 'Successfully updated the job');
-        return res.redirect('/jobs');
+        return res.redirect(`/jobs/${req.params.id}`);
     } catch (error) {
         req.flash('error', 'Something went wrong while updating a job, please try again later');
 		console.log(error);
@@ -157,7 +176,7 @@ router.delete("/jobs/:id",checkLoggedIn,checkAdmin,async (req,res) =>{
 // ! changing job status
 router.get('/jobs/:id/status', checkLoggedIn, checkAdmin, async (req, res) => {
 	try {
-		const { type } = req.query,
+		const  type  = req.query.status,
 			{ id } = req.params;
 		if (!type) return res.redirect(`/jobs/${id}`);
 	    await Job.findByIdAndUpdate(id, { status: type });
@@ -181,13 +200,15 @@ router.get('/jobs/:id/apply/:userId',checkLoggedIn,async(req,res) =>{
         }
         for(let ids of job.appliedUsers){
             if(ids.equals(user._id)){
-                req.flash('error', 'you acan only apply ones');
+                req.flash('error', 'you can only apply ones');
 		        return res.redirect(`/jobs/${req.params.id}`);
             }
         }
         job.appliedUsers.push(user);
 		await job.save();
-        req.flash("success", "successfully applyed in a job");
+        user.appliedJobs.push(job);
+        await user.save();
+        req.flash("success", "successfully applyed");
         return res.redirect(`/jobs/${id}`);
     } catch (error) {
         req.flash('error', 'Something went wrong while applying in a job, please try again later');
@@ -195,6 +216,14 @@ router.get('/jobs/:id/apply/:userId',checkLoggedIn,async(req,res) =>{
 		return res.redirect(`/jobs/${req.params.id}`);
     }
 });
+
+//! apply job and without login
+
+router.get('/jobs/:id/apply/',(req,res)=>{
+    req.flash('error', 'You need to login first');
+    res.redirect('/login')
+});
+
 //! test
 router.get('/jobs/:id/test',async(req,res) =>{
     try {

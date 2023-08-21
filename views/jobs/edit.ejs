@@ -1,15 +1,121 @@
 <!-- Edit page for edit route for edit exesting job it will give prefill form -->
+<%- include('../partials/jobHeader') %>
 
-<%- include('../partials/header') %>
-<h1>edit page for <%= foundJob.postName %></h1>
-<form action="/jobs/<%= foundJob._id %>?_method=patch" method="post">
-    <input required type="text" name="postName" value="<%= foundJob.postName %>" id="">
-    <input required type="text" name="companyName" value="<%= foundJob.companyName %>" id="">
-    <input required type="number" name="CTC" value="<%= foundJob.CTC %>" id="">
-    <input type="number" name="CGPA" value="<%= foundJob.CGPA%>" id="" min="0" max="10" step="0.01">
-    <input type="text" name="location" value="<%= foundJob.location %>" id="">
-    <textarea required name="description" id="" cols="30" rows="10"><%= foundJob.description %></textarea>
-    <input type="number" name="numberOfPositions" value="<%= foundJob.numberOfPositions%>" id="">
-    <input type="submit" value="updet edited job">
-</form>
+<div class="container">
+    <div class="row mt-2">
+        <div class="col-lg-6">
+            <img src="/images/add_job.svg" id="login-img" alt="">
+        </div>
+        <div class="col-lg-6">
+            <main class="form-signin mt-5">
+                <form action="/jobs/<%= foundJob._id %>?_method=patch" method="post">
+                    <h1 class="h3 fs-3 mb-3 lead text-center">Edit the job</h1>
+
+                    <div class="form-floating">
+                        <input value="<%= foundJob.companyName %>" type="text" class="form-control mid-input" id="jobTitle" name="job[companyName]"
+                            required>
+                        <label for="jobTitle">Job Title</label>
+                    </div>
+
+                    <div class="form-floating">
+                        <input value="<%= foundJob.logo %>" type="text" class="form-control mid-input" id="jobLogo" name="job[logo]"
+                            required>
+                        <label for="jobLogo">Company Name For Logo</label>
+                    </div>
+
+                    <div class="form-floating">
+                        <select name="job[time]" class="form-select mid-input" id="type" required>
+                            <option value="Full-Time">Full-Time</option>
+                            <option value="Part-Time">Part-Time</option>
+                            <option value="Temporary">Temporary</option>
+                            <option value="Seasonal">Seasonal</option>
+                        </select>
+                        <label for="type">Job Type</label>
+                    </div>
+
+                    <div class="form-floating">
+                        <select name="job[postName]" class="form-select mid-input" id="category" required>
+                            <option value="Software Engineer">Software Engineer</option>
+                            <option value="Program Developer">Program Developer</option>
+                            <option value="Program Manager">Program Manager</option>
+                            <option value="Graphics Designer">Graphics Designer</option>
+                        </select>
+                        <label for="category">Job Category</label>
+                    </div>
+
+                    <div class="form-floating">
+                        <input value="<%= foundJob.eligibility %>" type="text" class="form-control" id="registerName" name="job[eligibility]"
+                            required>
+                        <label for="registerName">Eligibility Criteria</label>
+                    </div>
+
+                    <div class="form-floating">
+                        <input value="<%= foundJob.deadline %>" type="date" class="form-control mid-input" id="deadline" name="job[deadline]"
+                            required>
+                        <label for="deadline">Job Deadline</label>
+                    </div>
+
+                    <div class="form-floating">
+                        <textarea style="height: 150px;" type="text" class="form-control mid-input" id="description"
+                            name="job[description]"  required><%= foundJob.description %></textarea>
+                        <label for="description"></label>
+                    </div>
+
+                    <div class="form-floating">
+                        <input value="<%= foundJob.location %>" type="text" class="form-control mid-input" id="location" name="job[location]"
+                            placeholder="Location" required>
+                        <label for="location">Company Location</label>
+                    </div>
+
+                    <div class="form-floating">
+                        <select name="job[experience]" class="form-select mid-input" id="experience" required>
+                            <option value="Entry Level">Entry Level</option>
+                            <option value="Mid Level">Mid Level</option>
+                            <option value="Mid-Senior Level">Mid-Senior Level</option>
+                            <option value="Top Level">Top Level</option>
+                        </select>
+                        <label for="experience">Experience</label>
+                    </div>
+
+                    <div class="form-floating">
+                        <textarea style="height: 150px;" type="text" class="form-control mid-input" id="responsibilities"
+                            name="job[responsibilities]"  required><%= foundJob.responsibilities %></textarea>
+                        <label for="responsibilities"></label>
+                    </div>
+
+                    <div class="form-floating">
+                        <input value="<%= foundJob.requirements %>" type="text" class="form-control mid-input" id="Requirements" name="job[requirements]"
+                             required>
+                        <label for="Requirements">Requirements</label>
+                    </div>
+
+                    <div class="form-floating">
+                        <input value="<%= foundJob.CTC %>" type="text" class="form-control mid-input" id="ctc" name="job[CTC]"
+                            required>
+                        <label for="ctc">CTC</label>
+                    </div>
+
+                    <div class="form-floating">
+                        <input value="<%= foundJob.CGPA %>" type="number" class="form-control mid-input" min="0" max="10" step="0.01" id="cgpa" name="job[CGPA]"
+                             required>
+                        <label for="cgpa">CGPA</label>
+                    </div>
+
+                    <div class="form-floating">
+                        <input value="<%= foundJob.numberOfPositions %>" type="text" class="form-control mid-input" id="NOP" name="job[numberOfPositions]"
+                             required>
+                        <label for="NOP">Number Of Positions</label>
+                    </div>
+
+                    <button class="w-100 btn btn-lg btn-primary mt-3" type="submit">Post Job</button>
+                </form>
+            </main>
+            <div class="form-signin">
+                <a href="/jobs">Go back</a>
+            </div>
+        </div>
+    </div>
+
+</div>
+
 <%- include('../partials/footer') %>

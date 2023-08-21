@@ -10,7 +10,7 @@ router.post('/login',passport.authenticate('local',{
     failureRedirect: '/login',
     failureFlash: true  //* SHOWING flash => wrong password entered.
 }),(req,res)=>{
-    req.flash('success', `Welcome back ${req.user.username}`);
+    req.flash('success', `Welcome back ${req.user?.name}`);
 		return res.redirect('/jobs');
 });
 router.get('/signup',(req,res)=>{
@@ -24,9 +24,11 @@ router.post('/signup',async (req,res)=>{
 			CGPA: req.body.CGPA,
 			gender: req.body.gender,
 			phone: req.body.phone,
-			dob: req.body.dob
+			dob: req.body.dob,
+			name: req.body.name
 		});
 		let registeredUser = await User.register(newUser, req.body.password);
+		registeredUser.isAdmin = false;
 		req.login(registeredUser, function(error) {
 			if (error) {
 				req.flash('error', 'Something went wrong while signing you up, please try again later');
@@ -37,7 +39,7 @@ router.post('/signup',async (req,res)=>{
 			return res.redirect('/jobs');
 		});
 	} catch (error) {
-		req.flash('error', 'Something went wrong while signing you up, please try again later');
+		req.flash('error', `${error}`);
 		console.log(error);
 		return res.redirect('/jobs');
 	}

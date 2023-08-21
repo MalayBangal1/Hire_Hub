@@ -11,9 +11,9 @@ const{checkLoggedIn,checkAdmin} = require('../middlewares/index');
 //* index route
 router.get('/notifications',async (req,res) =>{
     try {
-        const allNotifs = await Notification.find();
+        const notifications = await Notification.find();
 
-        return res.render('notification/index',{allNotifs});
+        return res.render('notification/index',{notifications});
     } catch (error) {
         req.flash('error', 'Something went wrong while fetching a Notification, please try again later');
 		console.log(error);

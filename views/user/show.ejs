@@ -1,25 +1,102 @@
-<%- include('../partials/header') %>
 
-<div class="card border-dark mb-3" style="max-width: 100%;">
-    <div class="card-header">show page for user <%= foundUser.username %></div>
-    <div class="card-body text-dark text-center">
-      <h5 class="card-title">Info card Title</h5>
-      <ul class="card-text" style="list-style-type: none;">
-        <li><%= foundUser.username %></li>
-        <li><%= foundUser.CGPA %></li>
-        <li><%= foundUser.phone %></li>
-        <li><%= foundUser.dob %></li>
-        <li><%= foundUser.gender %></li>
-        <% if(currentUser.resume == undefined){%>
-          <li><a class="btn btn-info" href="/users/<%= foundUser._id %>/resume">creat Resume</a></li>
-       <% } else {%>
-        <li><a class="btn btn-info" href="/users/<%= foundUser._id %>/show_resume">Resume</a></li>
-      <%}%>
-    </ul>
-    <a href="/users/<%= foundUser._id %>/edit" class="btn btn-warning">Edit Profile</a>
+<%- include('../partials/userHeader'); -%>
+<div class="show-page">
+    <div style="padding-top: 100px; padding-bottom: 150px; background-image: url(/images/my-profile.svg); background-repeat: no-repeat; background-position: 50% 25%;" class="online-cv section-overly pt-90 pb-120">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-xl-10">
+                    <div class="cv-caption text-center">
+                        <p class="pera2 mt-5">
+                            My Profile
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container mt-5">
+        <div class="card mb-3">
+            <div class="row g-0">
+                <div class="col-lg-1 d-flex align-items-center">
+                    <img style="background-position: center;" src="#" class="img-fluid rounded-circle my-auto p-2" alt="...">
+                </div>
+                <div class="col-lg-8">
+                    <div class="card-body">
+                        <h4 class="card-title">
+                            Hello,<%= user.name %>
+                            <span id="color-red"><%= user.userName %></span>
+                            <% if(currentUser && currentUser.isAdmin){ %>
+                            	<span class="lead"> (ADMIN) </span>
+                            <% } %>
+                        </h4>
+                        <p class="card-text"><small class="text-muted">
+                                <% if(currentUser._id.equals(user._id)){ %>
+                                    <i style="color: #5FBA7C;" class="fas fa-dot-circle"></i> Onine
+                                <% } %>
+                                    
+                            </small></p>
+                    </div>
+                </div>
+                <div class="col-lg-3 d-flex align-items-center justify-content-center">
+                    <% if(currentUser && user._id.equals(currentUser._id) || currentUser && currentUser.isAdmin){ %>
+                    	<a href="/users/<%=user._id%>/edit" class="btn btn-outline-warning">Edit</a>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+        	<div class="col-lg-6 mb-5">
+        		<div class="card">
+		        	<div class="card-body">
+						<h4 class="card-title"><i id="color-red" class="me-2 fas fa-user-secret"></i> Personal Details</h4>
+						<div class="p-3 card-text">
+							<p class="ms-4">
+								<strong>Name: </strong><%=user.name%>
+							</p>
+							<p class="ms-4">
+								<strong>Official Email ID: </strong><%=user.username%>
+							</p>
+							<p class="ms-4">
+								<strong>DOB: </strong><%=user.dob%>
+							</p>
+							<p class="ms-4">
+								<strong>CGPA: </strong><%=user.CGPA%>
+							</p>
+							
+							<p class="ms-4">
+								<strong>Mobile Number: </strong><%=user.phone%>
+							</p>
+							<p class="ms-4">
+								<a class="profile-link text-decoration-none" href="<%=user.resumeLink%>"><i class="me-2 fas fa-external-link-alt"></i><strong>Resume</strong></a>
+							</p>
+						
+						</div>
+		        	</div>
+		        </div>
+        	</div>
+        	<div class="col-lg-6 mb-5">
+        		<div class="card">
+        			<div class="card-body">
+        				<h4 class="card-title"><i id="color-red" class="me-3 fas fa-clipboard-check"></i>Applied Jobs</h4>
+        				<div class="p-3 card-text">
+                            <% if(user.appliedJobs.length == 0){ %>
+                                <p><em>You have not applied to any jobs yet, you can search for jobs <a class="text-decoration-none" id="color-red" href="/jobs">here</a></em></p>
+                            <% } else { %>
+            					<% user.appliedJobs.slice().reverse().forEach(function(job){ %>
+    								<p>
+    									<a class="ms-4 text-decoration-none" id="color-red" href="/jobs/<%=job._id%>"><strong><%=job.companyName%></strong></a> - <em><%=job.status%></em>
+    								</p>
+    							<% }) %>
+                            <% } %>
+        				</div>
+        			</div>
+        		</div>
+        	</div>
+        </div>
     </div>
 </div>
 
 
-
+<%- include('../partials/userFooter') %>
 <%- include('../partials/footer') %>

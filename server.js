@@ -10,6 +10,9 @@ const session = require('express-session');
 const passport = require('passport');
 const localStrategy = require('passport-local');
 const flash = require('connect-flash');
+const moment = require('moment');
+
+
 const app = express();
 
 //* 2 data base connection.
@@ -45,6 +48,7 @@ passport.use(new localStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
+
 //* 4 server configration.
 // flash setup
 app.use(flash());
@@ -57,11 +61,14 @@ app.use(express.urlencoded({ extended: true }));
 // telling express all "view" file with .ejs extention. ebar amde .ejs deyar dorkar nai
 app.set("view engine", "ejs");
 
+
+
 // global middleware
 app.use((req, res, next) => {
 	res.locals.success = req.flash('success');
 	res.locals.error = req.flash('error');
 	res.locals.currentUser = req.user;
+    res.locals.moment = moment;
 	next();
 });
 
@@ -81,6 +88,7 @@ app.use(questionRoute);
 app.get("/",(req,res)=>{ //landing page route.
     res.send("working");
 });
+
 
 app.get("*",(req,res) =>{ // Handeling invalid URL.
     res.send("page notfound 404");

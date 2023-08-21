@@ -15,7 +15,7 @@ const jobSchema = new mongoose.Schema({
     postName : {
         type: String,
         required: true,
-        enum: [ 'SDE', 'analyst', 'ui', 'hr', 'manager' ]
+        // enum: [ 'SDE', 'analyst', 'ui', 'hr', 'manager' ]
     },
     companyName : {
         type: String,
@@ -24,9 +24,9 @@ const jobSchema = new mongoose.Schema({
 		
     },
     CTC :{
-        type: Number,
+        type: String,
         required: true,
-        // default: "not mention",
+        default: "not mention",
     },
     CGPA : {
         type: Number,
@@ -34,26 +34,86 @@ const jobSchema = new mongoose.Schema({
 		min: 0,
 		max: [ 10, 'Maximum allowed value for cgpa is 10' ]
     },
-    location : String,
     status: {
 		type: String,
 		enum: [ 'active', 'over', 'interview' ],
 		default: 'active'
 	},
-    appliedUsers :[
-        {
-            type : mongoose.Schema.Types.ObjectId,
-            ref : 'user'
-        }
-    ],
+    appliedUsers :
+            [
+				{
+					id: {
+						type: mongoose.Schema.Types.ObjectId,
+						ref: 'user'
+					},
+					shortlisted: {
+						type: Boolean,
+						default: false
+					},
+					rejected: {
+						type: Boolean,
+						default: false
+					},
+					name: String
+				}
+			],
+       
     questions:[
         {
             type: mongoose.Schema.Types.ObjectId,
             ref:'questions'
         }
     ],
-    description : String,
-    numberOfPositions: Number,
+    numberOfPositions: {
+        type: String
+    },
+    createdAt: {
+		type: Date,
+		default: Date.now()
+	},
+
+	logo: {
+		type: String,
+		default: 'krishna'
+	},
+
+	eligibility: {
+		type: String,
+		default: 'not given'
+	},
+
+	description: {
+		type: String,
+		default: 'not given'
+	},
+
+	responsibilities: {
+		type: String,
+		default: 'not given'
+	},
+
+	requirements: {
+		type: String,
+		default: 'not given'
+	},
+
+	location: {
+		type: String,
+		default: 'unknown'
+	},
+
+	time: {
+		type: String,
+		default: 'Full-Time'
+	},
+
+	deadline: {
+		type: Date
+	},
+	experience: {
+		type: String,
+		default: 'Entry Level'
+	}
 });
 
 // const Jobsmodel = mongoose.model("job",jobschema);

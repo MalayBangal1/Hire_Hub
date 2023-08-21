@@ -1,10 +1,73 @@
-<%- include('../partials/header') %>
-<form action="/users/<%= foundUser._id %>?_method=patch" method="post">
-    <input type="email" name="username" id="" value="<%= foundUser.username %>" disabled>
-    <input type="date" name="dob" id="" value="<%= foundUser.dob %>">
-    <input type="text" name="phone" id="" value="<%= foundUser.phone %>">
-    <input type="number" name="CGPA" min="0" max="10" step="0.01" value="<%= foundUser.CGPA %>">
-    <input type="text" name="gender" value="<%= foundUser.gender %>" id="">
-    <input class="btn btn-warning" type="submit" value="update">
-</form>
+
+<%- include('../partials/jobHeader'); -%>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-6">
+            <img src="/images/user_profile.svg" id="login-img" alt="logo">
+        </div>
+        <div class="col-lg-6">
+            <main class="form-signin mt-5">
+                <form action="/users/<%= user._id %>?_method=patch" method="post" >
+                    <h1 class="h3 fs-3 mb-3 lead text-center">Edit user "<%=user.name%>"</h1>
+
+                    <div class="form-floating">
+                        <input type="text" class="form-control mid-input" id="jobTitle" name="user[name]"
+                            value="<%=user.name%>" >
+                        <label for="jobTitle">User Name</label>
+                    </div>
+
+                    <div class="form-floating">
+                        <input type="text" class="form-control" id="registerName" name="userName"
+                            value="<%=user.username%>" disabled>
+                        <label for="registerName">UserID</label>
+                    </div>
+
+                    <div class="form-floating">
+                        <input type="text" class="form-control mid-input" id="gender" name="user[gender]"
+                            value="<%=user.gender%>">
+                        <label for="gender">Gender</label>
+                    </div>
+
+                    <div class="form-floating">
+                        <input type="text" class="form-control mid-input" id="dob" name="user[dob]"
+                            value="<%=user.dob%>" >
+                        <label for="dob">User DOB</label>
+                    </div>
+
+                    <div class="form-floating">
+                        <input type="text" class="form-control mid-input" id="useremail" name="user[CGPA]"
+                            value="<%=user.CGPA%>" >
+                        <label for="useremail">User CGPA</label>
+                    </div>
+
+                    
+
+                    <div class="form-floating">
+                        <input type="text" class="form-control mid-input" id="useremail" name="user[phone]"
+                            value="<%=user.phone%>">
+                        <label for="useremail">User Mobile No</label>
+                    </div>
+
+            
+
+                    <div class="form-floating">
+                        <input type="text" class="form-control mid-input" id="useremail" name="user[resumeLink]"
+                            value="<%=user.resumeLink%>">
+                        <label for="useremail">User Resume Link</label>
+                    </div>
+
+            
+
+                    <button class="w-100 btn btn-lg btn-primary" type="submit">Update User</button>
+                </form>
+            </main>
+            <div class="form-signin">
+                <a href="/users/<%= user._id %>">Go back</a>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
 <%- include('../partials/footer') %>

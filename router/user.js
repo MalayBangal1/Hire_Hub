@@ -13,8 +13,8 @@ router.get('/users/:id', async (req, res) => {
 		if(!req.user){
 			return res.redirect('/jobs/login');
 		}
-		const foundUser = await User.findById(req.params.id);
-		return res.render('user/show', { foundUser });
+		const user = await User.findById(req.params.id).populate('appliedJobs');
+		return res.render('user/show', { user });
 	} catch (error) {
 		req.flash('error', 'Something went wrong while fetching a user, please try again later');
 		console.log(error);
@@ -24,8 +24,8 @@ router.get('/users/:id', async (req, res) => {
 
 router.get('/users/:id/edit', checkLoggedIn,verifyUser, async (req, res) => {
 	try {
-		const foundUser = await User.findById(req.params.id);
-		return res.render('user/edit', { foundUser });
+		const user = await User.findById(req.params.id);
+		return res.render('user/edit', { user });
 	} catch (error) {
 		req.flash('error', 'Something went wrong while fetching a user, please try again later');
 		console.log(error);
@@ -36,12 +36,8 @@ router.get('/users/:id/edit', checkLoggedIn,verifyUser, async (req, res) => {
 router.patch('/users/:id', checkLoggedIn,verifyUser, async (req, res) => {
     // res.send(req.body);
 	try {
-		const userData = {
-			CGPA: req.body.CGPA,
-			gender: req.body.gender,
-			dob: req.body.dob,
-			phone: req.body.phone,
-		};
+		const userData = req.body.user;
+		userData.isAdmin = false;
 		await User.findByIdAndUpdate(req.params.id, userData);
 		req.flash('success', 'Successfully updated a user');
 		return res.redirect(`/users/${req.params.id}`);

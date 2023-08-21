@@ -5,6 +5,14 @@ const notifSchema = new mongoose.Schema({
         required : true,
     },
     body : String,
+    createdAt: {
+        type: Date,
+        default: Date.now()
+    },
     author : String,
+    jobId:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref: 'job'
+    }
 });
 module.exports = mongoose.model('notification',notifSchema);
