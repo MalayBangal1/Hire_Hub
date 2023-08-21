@@ -14,7 +14,7 @@ router.get('/users/:id', async (req, res) => {
 			return res.redirect('/jobs/login');
 		}
 		const user = await User.findById(req.params.id).populate('appliedJobs');
-		return res.render('user/show', { user });
+		return res.render('user/show', { user,page: 'Profile - Hire Hub' });
 	} catch (error) {
 		req.flash('error', 'Something went wrong while fetching a user, please try again later');
 		console.log(error);
@@ -25,7 +25,7 @@ router.get('/users/:id', async (req, res) => {
 router.get('/users/:id/edit', checkLoggedIn,verifyUser, async (req, res) => {
 	try {
 		const user = await User.findById(req.params.id);
-		return res.render('user/edit', { user });
+		return res.render('user/edit', { user,page: 'Edit Profile - Hire Hub' });
 	} catch (error) {
 		req.flash('error', 'Something went wrong while fetching a user, please try again later');
 		console.log(error);
@@ -53,7 +53,7 @@ router.patch('/users/:id', checkLoggedIn,verifyUser, async (req, res) => {
 router.get('/users/:id/resume', checkLoggedIn, verifyUser, async (req, res) => {
 	try {
 		const user = await User.findById(req.params.id);
-		return res.render('user/new_resume', { user });
+		return res.render('user/new_resume', { user,page: 'Resume - Hire Hub' });
 	} catch (error) {
 		req.flash('error', 'Something went wrong while updating resume, please try again later');
 		console.log(error);
@@ -99,7 +99,7 @@ router.get("/users/:id/show_resume",checkLoggedIn, verifyUser,async (req,res)=>{
 		//^ populate('key: <== where obj Id store') we have to write key inside ('');
 		//& populate('ref kaha pe hain')
 		const resume = user.resume;
-		return res.render('user/show_resume',{resume});
+		return res.render('user/show_resume',{resume,page: 'Resume - Hire Hub'});
 		// res.send(resume);
 	} catch (error) {
 		req.flash('error', 'Something went wrong while showing resume, please try again later');

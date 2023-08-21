@@ -13,7 +13,7 @@ router.get('/notifications',async (req,res) =>{
     try {
         const notifications = await Notification.find();
 
-        return res.render('notification/index',{notifications});
+        return res.render('notification/index',{notifications , page: 'Notification - Hire Hub'});
     } catch (error) {
         req.flash('error', 'Something went wrong while fetching a Notification, please try again later');
 		console.log(error);
@@ -22,7 +22,7 @@ router.get('/notifications',async (req,res) =>{
 });
 //* new route
 router.get('/notifications/new',checkLoggedIn,checkAdmin,(req,res)=>{
-    return res.render('notification/new');
+    return res.render('notification/new',{page: 'New Notif - Hire Hub'});
 });
 //* create route
 router.post('/notifications',checkLoggedIn,checkAdmin,async (req,res) =>{
@@ -45,7 +45,7 @@ router.post('/notifications',checkLoggedIn,checkAdmin,async (req,res) =>{
 router.get('/notifications/:id/edit',checkLoggedIn,checkAdmin,async (req,res) =>{
     try {
         const foundNotif = await Notification.findById(req.params.id);
-        return res.render('notification/edit',{foundNotif});
+        return res.render('notification/edit',{foundNotif,page: 'Edit Notif - Hire Hub'});
     } catch (error) {
         req.flash('error', 'Something went wrong while editing Notification, please try again later');
 		console.log(error);

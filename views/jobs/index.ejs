@@ -49,7 +49,19 @@
             <div class="card text-dark bg-light">
                 <div class="card-header text-start"><em>Status: <%= job.status %></em></div>
                 <div class="card-body">
-                    <!-- <img src="" alt="job logo" class="card-img-top" style="width: 40%; height: auto;"> -->
+
+                   
+                        <% if(job.logo.length > 25) {%>
+
+                            <img src=" <%= job.logo %> " alt="Logo" class="card-img-top" style="width: 45%; height: auto;">
+    
+                            <%}else {%>
+    
+                                <i class="fa-solid fa-briefcase fa-2xl" style="color: #166974;"></i>
+    
+                                <%}%>
+                    
+
                     <h5 class="card-title mt-3">
                         <%=job.postName%>
                     </h5>
@@ -83,12 +95,16 @@
                 style="pointer-events: none"
             <% } %> class="page-link" href="/jobs?page=<%= allJobs.prevPage %>"><i class="fa-sharp fa-solid fa-arrow-left "></i></a></li>
 
-            <li class="page-item"><a class="page-link" href="/jobs?page=<%= allJobs.page %>"><%= allJobs.page %></a></li>
+            <li class="page-item"><a style="color: #ca2a2a;" class="page-link" href="/jobs?page=<%= allJobs.page %>"><%= allJobs.page %></a></li>
 
-            <li class="page-item"><a class="page-link" href="/jobs?page=<%= allJobs.page + 1 %>"><%= allJobs.page + 1 %></a>
+            <li class="page-item"><a <% if(!allJobs.hasNextPage){%>
+                style="pointer-events: none"
+            <% } %> class="page-link" href="/jobs?page=<%= allJobs.page + 1 %>"><%= allJobs.page + 1 %></a>
             </li>
 
-            <li class="page-item"><a class="page-link" href="/jobs?page=<%= allJobs.page + 2 %>"><%= allJobs.page + 2 %></a>
+            <li class="page-item"><a <% if(allJobs.totalDocs < (allJobs.page + 2)*allJobs.limit  ){%>
+                style="pointer-events: none"
+            <% } %> class="page-link" href="/jobs?page=<%= allJobs.page + 2 %>"><%= allJobs.page + 2 %></a>
             </li>
 
             <li class="page-item"><a <% if(!allJobs.hasNextPage){%>

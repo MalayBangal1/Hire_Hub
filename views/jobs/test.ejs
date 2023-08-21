@@ -1,47 +1,55 @@
-<%- include('../partials/header') %>
-<h1>test page</h1>
+<%- include('../partials/jobHeader') %>
+
 
 <div class="container">
+  <h1 class="mt-2 mb-2">Test Page</h1>
+
     <form action="/jobs/<%= job._id %>/test" method="post">
 
-        <% job.questions.forEach((ele,ind) => { %>
-    
-            <h5><%= ele.titel %></h5>
-    
-            <div class="form-check">
-                <input class="form-check-input" type="radio" name="Question<%= ind %>" id="flexRadioDefault1" value="a">
-                <label class="form-check-label" for="flexRadioDefault1">
-                  <%= ele.option1 %>
-                </label>
-              </div>
-    
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="Question<%= ind %>" id="flexRadioDefault2" value="b">
-                <label class="form-check-label" for="flexRadioDefault2">
-                  <%= ele.option2 %>
-                </label>
-              </div>
-    
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="Question<%= ind %>" id="flexRadioDefault3" value="c">
-                <label class="form-check-label" for="flexRadioDefault3">
-                  <%= ele.option3 %>
-                </label>
-              </div>
-    
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="Question<%= ind %>" id="flexRadioDefault4" value="d">
-                <label class="form-check-label" for="flexRadioDefault4">
-                  <%= ele.option4 %>
-                </label>
-              </div>
-              <hr>
+        <div class="row">
 
-           <% }); %>
+            <% job.questions.forEach((ele,ind) => { %>
+              
+              <div class="col-lg-6 mb-3 mt-2">
+              <h5><%= ind+1 %>. <%= ele.titel %></h5>
+      
+              <div class="form-check">
+                
+                  <input class="form-check-input" type="radio" name="Question<%= ind %>" id="flexRadioDefault1" value="a"><span>A)</span>
+                  <label class="form-check-label" for="flexRadioDefault1">
+                    <%= ele.option1 %>
+                  </label>
+                </div>
+      
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="Question<%= ind %>" id="flexRadioDefault2" value="b"><span>B)</span>
+                  <label class="form-check-label" for="flexRadioDefault2">
+                    <%= ele.option2 %>
+                  </label>
+                </div>
+      
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="Question<%= ind %>" id="flexRadioDefault3" value="c"><span>C)</span>
+                  <label class="form-check-label" for="flexRadioDefault3">
+                    <%= ele.option3 %>
+                  </label>
+                </div>
+      
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="Question<%= ind %>" id="flexRadioDefault4" value="d"><span>D)</span>
+                  <label class="form-check-label" for="flexRadioDefault4">
+                    <%= ele.option4 %>
+                  </label>
+                </div>
+              </div>
+          <% }); %>
 
-              <input type="submit" value="submit">
-              <input type="reset" value="reset">
-          </form>
+          
+        </div>
+
+              <input class="btn btn-outline-primary m-2" type="submit" value="Submit">
+              <input class="btn btn-outline-danger m-2" type="reset" value="Reset">
+    </form>
 </div>
 
 <%- include('../partials/footer') %>

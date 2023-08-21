@@ -30,7 +30,7 @@
                     <br>
                     <div class="job-search-field">
                         <div class="job-search-item">
-                            <form action="/jobs" method="get" class="form row">
+                            <form action="/jobs/search" method="get" class="form row">
                                 <div class="col-lg-5">
                                     <div class="form-group">
                                         <div class="d-flex">
@@ -38,7 +38,7 @@
                                             <span class="ms-auto">e.g. job, company</span>
                                         </div>
                                         <div class="position-relative left-icon">
-                                            <input type="text" class="form-control" name="search" placeholder="Job title, or company">
+                                            <input type="text" class="form-control" name="name" placeholder="Job title, or company">
                                             <i class="fas fa-search"></i>
                                         </div>
                                     </div>
@@ -187,12 +187,16 @@
                             style="pointer-events: none"
                         <% } %> class="page-link" href="/home?page=<%= recentJobs.prevPage %>"><i class="fa-sharp fa-solid fa-arrow-left "></i></a></li>
             
-                        <li class="page-item"><a class="page-link" href="/home?page=<%= recentJobs.page %>"><%= recentJobs.page %></a></li>
+                        <li class="page-item"><a  class="page-link" href="/home?page=<%= recentJobs.page %>"><%= recentJobs.page %></a></li>
             
-                        <li class="page-item"><a class="page-link" href="/home?page=<%= recentJobs.page + 1 %>"><%= recentJobs.page + 1 %></a>
+                        <li class="page-item"><a  <% if(!recentJobs.hasNextPage){%>
+                            style="pointer-events: none"
+                        <% } %> class="page-link" href="/home?page=<%= recentJobs.page + 1 %>"><%= recentJobs.page + 1 %></a>
                         </li>
             
-                        <li class="page-item"><a class="page-link" href="/home?page=<%= recentJobs.page + 2 %>"><%= recentJobs.page + 2 %></a>
+                        <li class="page-item"><a  <% if(recentJobs.totalDocs < (recentJobs.page + 2)*recentJobs.limit  ){%>
+                            style="pointer-events: none"
+                        <% } %> class="page-link" href="/home?page=<%= recentJobs.page + 2 %>"><%= recentJobs.page + 2 %></a>
                         </li>
             
                         <li class="page-item"><a <% if(!recentJobs.hasNextPage){%>

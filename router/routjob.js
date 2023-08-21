@@ -28,7 +28,7 @@ router.get('/home',async (req,res) =>{
             limit: 4,
           };
         const recentJobs = await Job.paginate({} ,options);
-        return res.render('jobs/home',{recentJobs});
+        return res.render('jobs/home',{recentJobs,page: 'Home - Hire Hub'});
     } catch (error) {
         req.flash('error', 'Something went wrong while fetching recent jobs, please try again later');
 		console.log(error);
@@ -43,8 +43,8 @@ router.get('/jobs/search',async (req,res) =>{
         const name = req.query.name;
         if(!name) return res.redirect('/jobs');
         const regex = new RegExp(escapeRegex(name));
-        const jobs = await Job.find({companyName: regex});
-        return res.render('jobs/search',{jobs})
+        const foundJob = await Job.find({companyName: regex});
+        return res.render('jobs/search',{foundJob,page: 'Search - Hire Hub'})
     } catch (error) {
         req.flash('error', 'Something went wrong while fetching all jobs, please try again later');
 		console.log(error);
@@ -63,7 +63,7 @@ router.get("/jobs",async (req,res) =>{
             limit: 8,
           };
         const allJobs = await Job.paginate({},options);
-        return res.render('jobs/index',{allJobs});
+        return res.render('jobs/index',{allJobs,page: 'Jobs - Hire Hub'});
         
     } catch (error) {
         req.flash('error', 'Something went wrong while fetching all jobs, please try again later');
@@ -73,7 +73,7 @@ router.get("/jobs",async (req,res) =>{
 });
 //* 2 NEW ROUTE
 router.get("/jobs/new",checkLoggedIn,checkAdmin,(req,res) =>{
-    return res.render('jobs/new');
+    return res.render('jobs/new',{page: 'New Job - Hire Hub'});
 });
 //* 3 CREATE ROUTE
 router.post("/jobs",checkLoggedIn,checkAdmin,async (req,res) =>{
@@ -84,7 +84,6 @@ router.post("/jobs",checkLoggedIn,checkAdmin,async (req,res) =>{
             url: `https://app.scrapein.app/api/v1/google/images?q=${newJob.logo}&google_domain=google.com&gl=us&hl=en&api_key=${process.env.API_KEY}`,
             headers: {accept: 'application/json'}
           };
-          
           await axios                     // needed await for updet nnewJob.logo 
             .request(options)
             .then(function (response) {
@@ -115,7 +114,7 @@ router.get("/jobs/:id",async (req,res) =>{
     try {
         const job = await Job.findById(req.params.id).populate('appliedUsers');
         // res.send(job);
-        return res.render('jobs/show',{job});
+        return res.render('jobs/show',{job,page: 'Job - Hire Hub'});
     } catch (error) {
         req.flash('error', 'Something went wrong while fetching a job, please try again later');
 		console.log(error);
@@ -126,7 +125,7 @@ router.get("/jobs/:id",async (req,res) =>{
 router.get("/jobs/:id/edit",checkLoggedIn,checkAdmin,async (req,res) =>{
     try {
         const foundJob = await Job.findById(req.params.id);
-        return res.render('jobs/edit',{foundJob});
+        return res.render('jobs/edit',{foundJob,page: 'Edit Job - Hire Hub'});
     } catch (error) {
         req.flash('error', 'Something went wrong while fetching a job, please try again later');
 		console.log(error);
@@ -137,6 +136,20 @@ router.get("/jobs/:id/edit",checkLoggedIn,checkAdmin,async (req,res) =>{
 router.patch("/jobs/:id",checkLoggedIn,checkAdmin,async (req,res)=>{
     try {
         const jobData = req.body.job;
+        const options =  {
+            method: 'GET',
+            url: `https://app.scrapein.app/api/v1/google/images?q=${jobData.logo}&google_domain=google.com&gl=us&hl=en&api_key=${process.env.API_KEY}`,
+            headers: {accept: 'application/json'}
+          };
+          await axios                     // needed await for updet nnewJob.logo
+            .request(options)
+            .then(function (response) {
+              jobData.logo = response.data.image_results[0].image; // updet newJob.logo
+            })
+            .catch(function (error) {
+              console.error(error);
+              req.flash('error', 'Something went wrong while creating a jobs logo, please try again later');
+            });
         await Job.findByIdAndUpdate(req.params.id,jobData);
         const newNotif = new Notification({
             title:`${jobData.companyName} just updet there job`,
@@ -228,7 +241,7 @@ router.get('/jobs/:id/apply/',(req,res)=>{
 router.get('/jobs/:id/test',async(req,res) =>{
     try {
         const job = await Job.findById(req.params.id).populate('questions');
-        return res.render('jobs/test',{ job });
+        return res.render('jobs/test',{ job,page: 'Test - Hire Hub'});
     } catch (error) {
         console.log(error);
 

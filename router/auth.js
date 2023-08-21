@@ -4,17 +4,17 @@ const passport = require('passport');
 const User = require('../models/user');
 
 router.get('/login',(req,res)=>{
-    return res.render('user/login');
+    return res.render('user/login',{page: 'Login - Hire Hub'});
 });
 router.post('/login',passport.authenticate('local',{
     failureRedirect: '/login',
     failureFlash: true  //* SHOWING flash => wrong password entered.
 }),(req,res)=>{
     req.flash('success', `Welcome back ${req.user?.name}`);
-		return res.redirect('/jobs');
+		return res.redirect('/home');
 });
 router.get('/signup',(req,res)=>{
-    return res.render('user/signup');
+    return res.render('user/signup',{page: 'Signup - Hire Hub'});
 });
 router.post('/signup',async (req,res)=>{
     try {
@@ -35,8 +35,8 @@ router.post('/signup',async (req,res)=>{
 				console.log(error);
 				return res.redirect('/jobs');
 			}
-			req.flash('success', 'Registration successful');
-			return res.redirect('/jobs');
+			req.flash('success', 'You Register Successfully');
+			return res.redirect('/home');
 		});
 	} catch (error) {
 		req.flash('error', `${error}`);

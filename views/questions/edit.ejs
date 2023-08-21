@@ -1,16 +1,43 @@
-<%- include('../partials/header') %>
-<h1>Edit page of jobs</h1>
+<%- include('../partials/jobHeader') %>
 
-<form action="/jobs/<%= id %>/questions/<%= quesId %>?_method=patch" method="post">
-
-<input type="text" name="title" value="<%= foundQuestion.titel %>">
-<input type="text" name="option1" value="<%= foundQuestion.option1 %>">
-<input type="text" name="option2" value="<%= foundQuestion.option2 %>">
-<input type="text" name="option3" value="<%= foundQuestion.option3 %>">
-<input type="text" name="option4" value="<%= foundQuestion.option4%>">
-<input type="text" name="correctAns" value="<%= foundQuestion.correctAns%>">
-<input type="submit" value="Updet">
-
-</form>
+<div class="container">
+    <div class="row">
+        <h1 class="mt-2 text-center">Edit page of Questions</h1>
+        <div >
+    
+    <form action="/jobs/<%= id %>/questions/<%= quesId %>?_method=patch" method="post">
+    
+    <div class="input-group mb-3">
+        <span class="input-group-text" id="inputGroup-sizing-default">Title</span>
+        <input value="<%= foundQuestion.titel %>" type="text" name="title" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+    </div>
+    <div class="input-group mb-3">
+        <span class="input-group-text" id="inputGroup-sizing-default">A</span>
+        <input value="<%= foundQuestion.option1 %>" type="text" name="option1" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+    </div>
+    <div class="input-group mb-3">
+        <span class="input-group-text" id="inputGroup-sizing-default">B</span>
+        <input value="<%= foundQuestion.option2 %>" type="text" name="option2" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+    </div>
+    <div class="input-group mb-3">
+        <span class="input-group-text" id="inputGroup-sizing-default">C</span>
+        <input value="<%= foundQuestion.option3 %>" type="text" name="option3" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+    </div>
+    <div class="input-group mb-3">
+        <span class="input-group-text" id="inputGroup-sizing-default">D</span>
+        <input value="<%= foundQuestion.option4 %>" type="text" name="option4" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+    </div>
+    <div class="input-group mb-3">
+        <span class="input-group-text" id="inputGroup-sizing-default">Correct Ans</span>
+        <input value="<%= foundQuestion.correctAns %>" type="text" name="correctAns" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+    </div>
+    <div class="d-flex justify-content-end">
+        <button class="btn btn-outline-success" type="submit">Update</button>
+    </div>
+    
+    </form>
+        </div>
+    </div>
+</div>
 
 <%- include('../partials/footer') %>

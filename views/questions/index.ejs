@@ -1,18 +1,40 @@
-<%- include('../partials/header') %>
-<h1>Index page of Questions</h1>
+<%- include('../partials/jobHeader') %>
 
-<% for(question of job.questions){%>
-    <div><%= question.titel %></div>
-    <div><%= question.option1 %></div>
-    <div><%= question.option2 %></div>
-    <div><%= question.option3 %></div>
-    <div><%= question.option4 %></div>
-    <div><%= question.correctAns %></div>
-    <a href="/jobs/<%= job._id %>/questions/<%= question._id %>">Edit</a>
-    <form action="/jobs/<%= job._id %>/questions/<%= question._id %>?_method=delete" method="post">
-    <input type="submit" value="Delete">
-    </form>
-<%} %>
-<a class="btn btn-outline-success me-3" href="/jobs/<%= job._id %>/questions/new">Add New Questions<strong>+</strong></a>
+<div class="container" >
+    <div class="text-center mb-4 mt-2"><h2>Index page of Questions</h2></div>
+    <div class="row">
+
+<% for (let question of foundJob?.questions) {%>
+    <div class="col-xl-6">
+    <div class="card mb-4" style="width: auto;">
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item"><strong>Title</strong> - <%= question.titel %> </li>
+          <li class="list-group-item"><strong>A</strong> - <%= question.option1 %> </li>
+          <li class="list-group-item"><strong>B</strong> - <%= question.option2 %></li>
+          <li class="list-group-item"><Strong>C</Strong> - <%= question.option3 %></li>
+          <li class="list-group-item"><strong>D</strong> - <%= question.option4 %></li>
+          <li class="list-group-item"><strong>Correct Ans</strong> - <%= question.correctAns %></li>
+        </ul>
+
+        <div class="row">
+            <div class="col-sm-12">
+                <a style="height: inherit; width: inherit;" class="btn btn-outline-warning mt-1 " href="/jobs/<%= foundJob._id %>/questions/<%= question?._id %>">Edit</a>
+            </div>
+    
+            <div class="col-sm-12 d-flex justify-content-end">
+                <form  action="/jobs/<%= foundJob._id %>/questions/<%= question?._id %>?_method=delete" method="post">
+                    <button class="btn btn-outline-danger m-1" type="submit" >Delete</button>
+                </form>
+            </div>
+        </div>
+
+      </div>
+    </div> 
+
+ <% } %>
+            <a class="btn btn-outline-success me-3 m-9" href="/jobs/<%= foundJob._id %>/questions/new">Add New Questions<strong>+</strong></a>
+        
+    </div>
+</div>
 
 <%- include('../partials/footer') %>
