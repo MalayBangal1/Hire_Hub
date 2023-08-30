@@ -91,7 +91,8 @@ app.get("/",(req,res)=>{ //landing page route.
 
 
 app.get("*",(req,res) =>{ // Handeling invalid URL.
-    res.send("page notfound 404");
+    // res.send("page notfound 404");
+    res.render('errorpage/notfound404');
 });
 
 //* 6 server listen.

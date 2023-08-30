@@ -33,7 +33,7 @@ router.post('/signup',async (req,res)=>{
 			if (error) {
 				req.flash('error', 'Something went wrong while signing you up, please try again later');
 				console.log(error);
-				return res.redirect('/jobs');
+				return res.redirect('/home');
 			}
 			req.flash('success', 'You Register Successfully');
 			return res.redirect('/home');
@@ -41,7 +41,7 @@ router.post('/signup',async (req,res)=>{
 	} catch (error) {
 		req.flash('error', `${error}`);
 		console.log(error);
-		return res.redirect('/jobs');
+		return res.redirect('/home');
 	}
 });
 
@@ -68,10 +68,10 @@ router.get('/logout',(req,res)=>{
         if (error) {
 			req.flash('error', 'Something went wrong while logging you out, please try again later');
 			console.log(error);
-			return res.redirect('/jobs');
+			return res.redirect('/home');
 		}
 		req.flash('success', 'Successfully logged out');
-		return res.redirect('/jobs');
+		return res.redirect('/home');
     });
 });
 module.exports = router;

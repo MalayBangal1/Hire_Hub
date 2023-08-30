@@ -3,8 +3,10 @@
 <%- include('../partials/jobHeader') %>
 
 <div class="container">
+    
     <div class="row mt-2">
         <div class="col-lg-6">
+            <%- include('../partials/flashAlerts') %>
             <img src="/images/add_job.svg" id="login-img" alt="">
         </div>
         <div class="col-lg-6">
@@ -20,7 +22,7 @@
 
                     <div class="form-floating">
                         <input type="text" class="form-control mid-input" id="joblogo" name="job[logo]"
-                            placeholder="Title" required>
+                            placeholder="Logo" required>
                         <label for="joblogo">Company Name For Logo</label>
                     </div>
 

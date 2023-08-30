@@ -1,27 +1,7 @@
 <%- include('../partials/jobHeader') %>
 <div class="banner" style="background-image: url(/images/home-banner.jpg);">
     <div class="container">
-        <% if((error && error.length > 0) || (success && success.length > 0)){ %>
-            <div class="pt-3" >
-                <div class="container">
-
-                    <% if(error && error.length > 0){ %>
-                        <div class=" mt-0 mb-0 alert alert-danger alert-dismissible fade show" role="alert">
-                            <%= error %>
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                        </div>
-                    <% } %>
-
-                    <% if(success && success.length > 0){ %>
-                        <div class=" mt-0 mb-0 alert alert-success alert-dismissible fade show" role="alert">
-                            <%= success %>
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                        </div>
-                    <% } %>
-
-                </div>
-            </div>
-        <% } %>
+        <%- include('../partials/flashAlerts') %>
         <div class="row">
             <div class="col-lg-6">
                 <div class="index-content">

@@ -11,7 +11,7 @@ const{checkLoggedIn,checkAdmin} = require('../middlewares/index')
 
 //* INDEX
 
-router.get('/jobs/:id/questions', async(req,res) =>{
+router.get('/jobs/:id/questions',checkLoggedIn,checkAdmin, async(req,res) =>{
     try {
         const foundJob = await Job.findById(req.params.id).populate('questions');
         // const questions = job.questions;

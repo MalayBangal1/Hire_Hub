@@ -39,7 +39,7 @@ router.patch('/users/:id', checkLoggedIn,verifyUser, async (req, res) => {
 		const userData = req.body.user;
 		userData.isAdmin = false;
 		await User.findByIdAndUpdate(req.params.id, userData);
-		req.flash('success', 'Successfully updated a user');
+		req.flash('success', 'Successfully updated a User Profile');
 		return res.redirect(`/users/${req.params.id}`);
 	} catch (error) {
 		req.flash('error', 'Something went wrong while updating a user, please try again later');

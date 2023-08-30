@@ -18,11 +18,13 @@ const verifyUser = (req, res, next) => {
 		return res.redirect('back');
 	}
 };
-module.exports = {
-    checkLoggedIn,
-    checkAdmin,
-    verifyUser
-};
+// module.exports = {
+//     checkLoggedIn,
+//     checkAdmin,
+//     verifyUser
+// };
+
+module.exports = { checkLoggedIn, checkAdmin, verifyUser };
 
 // module.exports=checkLoggedIn = (req,res,next) =>{
 //     if(req.isAuthenticated()) next();

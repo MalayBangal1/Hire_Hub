@@ -2,6 +2,7 @@
 <%- include('../partials/jobHeader') %>
 
 <div class="container">
+    <%- include('../partials/flashAlerts') %>
     <div class="row">
         <h1 class="mt-2 text-center">New page of questions</h1>
         <div >
@@ -10,27 +11,27 @@
     
     <div class="input-group mb-3">
         <span class="input-group-text" id="inputGroup-sizing-default">Title</span>
-        <input  type="text" name="title" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+        <input required  type="text" name="title" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
     </div>
     <div class="input-group mb-3">
         <span class="input-group-text" id="inputGroup-sizing-default">A</span>
-        <input  type="text" name="option1" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+        <input required  type="text" name="option1" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
     </div>
     <div class="input-group mb-3">
         <span class="input-group-text" id="inputGroup-sizing-default">B</span>
-        <input  type="text" name="option2" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+        <input required type="text" name="option2" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
     </div>
     <div class="input-group mb-3">
         <span class="input-group-text" id="inputGroup-sizing-default">C</span>
-        <input  type="text" name="option3" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+        <input required type="text" name="option3" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
     </div>
     <div class="input-group mb-3">
         <span class="input-group-text" id="inputGroup-sizing-default">D</span>
-        <input  type="text" name="option4" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+        <input required type="text" name="option4" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
     </div>
     <div class="input-group mb-3">
         <span class="input-group-text" id="inputGroup-sizing-default">Correct Ans</span>
-        <input  type="text" name="correctAns" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+        <input required type="text" name="correctAns" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
     </div>
     <div class="d-flex justify-content-end">
         <button class="btn btn-outline-success" type="submit">Add</button>
