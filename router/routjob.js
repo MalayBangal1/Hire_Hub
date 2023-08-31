@@ -62,6 +62,7 @@ router.get('/jobs/search',async (req,res) =>{
 
 router.get("/jobs",async (req,res) =>{
     try {
+        console.log(req.user);
         let pageNo = 1;
         if(req.query.page) pageNo = req.query.page;
         const options = {

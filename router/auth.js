@@ -11,7 +11,7 @@ router.post('/login',passport.authenticate('local',{
     failureFlash: true
 }),(req,res)=>{
     req.flash('success', `Welcome back ${req.user?.name}`);
-	console.log(req.user);
+	// console.log(req.user);
 		return res.redirect('/jobs');
 });
 router.get('/signup',(req,res)=>{
