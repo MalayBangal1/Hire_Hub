@@ -8,7 +8,7 @@ const Resume = require('../models/resume');
 const { checkLoggedIn, verifyUser} = require('../middlewares/index');
 
 // CRUD -> show, edit, update
-router.get('/users/:id', async (req, res) => {
+router.get('/users/:id',checkLoggedIn, async (req, res) => {
 	try {
 		if(!req.user){
 			return res.redirect('/jobs/login');
