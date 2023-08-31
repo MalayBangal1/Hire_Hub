@@ -8,7 +8,7 @@ const dotenv = require('dotenv');// require dotenv, we nont comfromise our sicur
 dotenv.config(); //use dotenv packeg.
 const session = require('express-session');
 const passport = require('passport');
-const localStrategy = require('passport-local');
+const localStrategy = require('passport-local').Strategy;
 const flash = require('connect-flash');
 const moment = require('moment');
 
