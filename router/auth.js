@@ -29,7 +29,7 @@ router.post('/signup',async (req,res)=>{
 			name: req.body.name
 		});
 		let registeredUser = await User.register(newUser, req.body.password);
-		registeredUser.isAdmin = false;
+		// registeredUser.isAdmin = false;
 		req.login(registeredUser, function(error) {
 			if (error) {
 				req.flash('error', 'Something went wrong while signing you up, please try again later');
