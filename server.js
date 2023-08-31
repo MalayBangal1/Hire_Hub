@@ -33,8 +33,8 @@ app.use(session({
     resave:false,
     saveUninitialized:true,
     cookie:{
-        httpOnly:true,
-        //secure:true,
+        // httpOnly:true,
+        secure:true,
         maxAge:1000*60*60*24
     }
 }));
@@ -96,7 +96,7 @@ app.get("*",(req,res) =>{ // Handeling invalid URL.
 });
 
 //* 6 server listen.
-
-app.listen(3000,()=>{
+const port =process.env.PORT;
+app.listen(port,()=>{
     console.log("server running at port no 3000"); // 3000 safe port choice.
 });
