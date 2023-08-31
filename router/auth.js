@@ -8,7 +8,8 @@ router.get('/login',(req,res)=>{
 });
 router.post('/login',passport.authenticate('local',{
     failureRedirect: '/login',
-    failureFlash: true  //* SHOWING flash => wrong password entered.
+    failureFlash: true
+	// SHOWING flash => wrong password entered.
 }),(req,res)=>{
     req.flash('success', `Welcome back ${req.user?.name}`);
 		return res.redirect('/home');
