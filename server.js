@@ -30,8 +30,8 @@ mongoose.connect(process.env.DB_URI)//(process.env) for process DB_URI variable 
 const SESSION_PASS = process.env.SESSION_SECRET;
 app.use(session({
     secret:SESSION_PASS,
-    resave:false,
-    saveUninitialized:false,
+    resave:true,
+    saveUninitialized:true,
     cookie:{
         // httpOnly:true,
         secure:true,
