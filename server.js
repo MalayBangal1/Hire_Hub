@@ -25,13 +25,14 @@ mongoose.connect(process.env.DB_URI)//(process.env) for process DB_URI variable 
     console.log(error);
 });
 
+const User = require('./models/user');
 
 //* 3 session and othantication.
 const SESSION_PASS = process.env.SESSION_SECRET;
 app.use(session({
     secret:SESSION_PASS,
-    // resave:false,
-    // saveUninitialized:true,
+    resave:false,
+    saveUninitialized:true,
     cookie:{
         // httpOnly:true,
         secure:true,
@@ -41,7 +42,7 @@ app.use(session({
 }));
 
 //*3.1 passport setup
-const User = require('./models/user'); //model of user needed for passport setup;
+// const User = require('./models/user'); //model of user needed for passport setup;
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -97,7 +98,7 @@ app.get("*",(req,res) =>{ // Handeling invalid URL.
 });
 
 //* 6 server listen.
-const port =process.env.PORT;
+const port = process.env.PORT;
 app.listen(port,()=>{
     console.log("server running at port no 3000"); // 3000 safe port choice.
 });
