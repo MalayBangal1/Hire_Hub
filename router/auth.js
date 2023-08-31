@@ -8,10 +8,10 @@ router.get('/login',(req,res)=>{
 });
 router.post('/login',passport.authenticate('local',{
     failureRedirect: '/login',
-    failureFlash: true
+    failureFlash:true,
 }),(req,res)=>{
     req.flash('success', `Welcome back ${req.user?.name}`);
-	console.log(req.flash);
+	// console.log(req.flash);
 		return res.redirect('/jobs');
 });
 router.get('/signup',(req,res)=>{
