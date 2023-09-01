@@ -12,7 +12,7 @@ router.post('/login',passport.authenticate('local',{
 }),(req,res)=>{
     req.flash('success', `Welcome back ${req.user?.name}`);
 	// console.log(req.flash);
-		return res.redirect('/jobs');
+		return res.redirect('/home');
 });
 router.get('/signup',(req,res)=>{
     return res.render('user/signup',{page: 'Signup - Hire Hub'});
