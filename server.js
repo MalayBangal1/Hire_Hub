@@ -31,7 +31,7 @@ const User = require('./models/user');
 const SESSION_PASS = process.env.SESSION_SECRET;
 app.use(session({
     secret:SESSION_PASS,
-    resave:false,
+    resave:true,
     saveUninitialized:true,
     cookie:{
         // httpOnly:true,

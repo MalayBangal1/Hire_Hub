@@ -15,9 +15,7 @@ const User = require("../models/user");
 
 const{checkLoggedIn,checkAdmin} = require('../middlewares/index');
 
-function escapeRegex(text) {
-	return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&');
-}
+
 
 router.get('/home',async (req,res) =>{
     try{
@@ -41,9 +39,12 @@ router.get('/home',async (req,res) =>{
 router.get('/jobs/search',async (req,res) =>{
     try {
         const name = req.query.name;
-        if(!name) return res.redirect('/jobs');
+        // if(!name) return res.redirect('/jobs');
+        function escapeRegex(name) {
+            return name.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&');
+        }
         const regex = new RegExp(escapeRegex(name));
-        const foundJob = await Job.find({postName: regex});
+        const foundJob = await Job.find({postName: regex,companyName: regex});
         // console.log(foundJob);
         // return res.render('jobs/search',{foundJob,page: 'Search - Hire Hub'});
         if(foundJob.length==0){
